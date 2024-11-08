@@ -19,5 +19,3 @@ resource "aws_cloudwatch_log_group" "logger" {
   name              = "/aws/eks/b58-eks/logger"
   retention_in_days = 1
 }
-
-
