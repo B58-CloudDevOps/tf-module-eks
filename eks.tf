@@ -1,6 +1,6 @@
 resource "aws_eks_cluster" "main" {
   name                      = "${var.env}-eks"
-  role_arn                  = aws_iam_role.example.arn
+  role_arn                  = aws_iam_role.cluster.arn
   enabled_cluster_log_types = ["audit", "controllerManager"]
   version                   = var.eks_version
 
@@ -9,13 +9,13 @@ resource "aws_eks_cluster" "main" {
   }
 
   depends_on = [
-    aws_iam_role_policy_attachment.example-AmazonEKSClusterPolicy,
-    aws_iam_role_policy_attachment.example-AmazonEKSVPCResourceController,
+    aws_iam_role_policy_attachment.cluster-AmazonEKSClusterPolicy,
+    aws_iam_role_policy_attachment.cluster-AmazonEKSVPCResourceController,
   ]
 }
 
 # Defines the retention of the enabled logs on cloud watch
 resource "aws_cloudwatch_log_group" "logger" {
-  name              = "/aws/eks/b58-eks/logger"
+  name              = "/aws/eks/${var.env}-eks/logger"
   retention_in_days = 1
 }
