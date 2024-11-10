@@ -12,6 +12,8 @@ resource "aws_eks_cluster" "main" {
     aws_iam_role_policy_attachment.cluster-AmazonEKSClusterPolicy,
     aws_iam_role_policy_attachment.cluster-AmazonEKSVPCResourceController,
   ]
+
+  tags = local.eks_tags
 }
 
 # Defines the retention of the enabled logs on cloud watch

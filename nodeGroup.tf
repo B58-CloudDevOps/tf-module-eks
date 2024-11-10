@@ -18,8 +18,5 @@ resource "aws_eks_node_group" "node" {
     min_size     = each.value["node_min_size"]
   }
 
-  tags = {
-    Environment = "Test"
-    project     = "expense"
-  }
+  tags = local.eks_tags
 }
