@@ -1,4 +1,4 @@
-resource "null_resource" "helm_install" {
+resource "null_resource" "helm_install_boot" {
 
   #   depends_on = [aws_eks_cluster.main, aws_eks_node_group.node]
   triggers = {
