@@ -1,6 +1,6 @@
 # Provisions Node Group and attachs this to the eks 
 resource "aws_eks_node_group" "node" {
-  depends_on = [aws_eks_addon.vpc_cni]
+  # depends_on = [aws_eks_addon.vpc_cni]
 
   for_each = var.node_groups
 
