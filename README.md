@@ -6,6 +6,3 @@ This is the backend module module for expense-terraform
 
 EKS: Elastic Kubernetes Service
  Which is managed service for Kubernetes ( Platform as a service )
- 
-
- # Extra Comment
