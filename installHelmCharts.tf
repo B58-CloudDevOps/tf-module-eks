@@ -6,6 +6,7 @@ resource "null_resource" "helm_install_boot" {
   }
   provisioner "local-exec" {
     command = <<EOF
+rm -rf .kube/config
 aws eks update-kubeconfig --name "${var.env}-eks"
 kubectl get nodes
 echo "Installing Metrics Server"
