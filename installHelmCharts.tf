@@ -20,7 +20,9 @@ kubectl apply -f https://raw.githubusercontent.com/B58-CloudDevOps/learn-kuberne
 echo "Installing Nginx Ingress Controller"
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo list 
-helm upgrade -i ngx-ingres ingress-nginx/ingress-nginx -f ./ingress.yaml
+ls -ltr
+echo "${path.module}"
+helm upgrade -i ngx-ingres ingress-nginx/ingress-nginx -f ${path.module}/ingress.yaml
 EOF
   }
 }
