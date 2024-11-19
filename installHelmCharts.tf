@@ -29,7 +29,7 @@ EOF
 
 
 
-# Destroy time provisioner to delete the lb
+# Destroy time provisioners to delete the lb
 resource "null_resource" "helm_uninstall" {
 
   #   depends_on = [aws_eks_cluster.main, aws_eks_node_group.node]
