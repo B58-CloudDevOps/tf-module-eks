@@ -52,7 +52,7 @@ resource "null_resource" "helm_uninstall" {
   provisioner "local-exec" {
     when    = destroy
     command = <<EOF
-aws eks update-kubeconfig --name "${var.env}-eks"
+aws eks update-kubeconfig --name "dev-eks"
 echo "UnInstalling Nginx Ingress Controller"
 echo "${path.module}"
 helm uninstall ngx-ingress
