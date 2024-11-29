@@ -54,7 +54,7 @@ resource "null_resource" "helm_uninstall" {
     command = <<EOF
 aws eks update-kubeconfig --name "dev-eks"
 echo "UnInstalling Nginx Ingress Controller"
-echo "${path.module}"
+
 helm uninstall ngx-ingress
 
 EOF
