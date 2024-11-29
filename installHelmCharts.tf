@@ -40,23 +40,23 @@ resource "null_resource" "prometheus_stack" {
 aws eks update-kubeconfig --name "${var.env}-eks"
 kubectl get nodes
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-helm install prometheus prometheus-community/kube-prometheus-stack -f ${path.module}/prometheus-dev.yml
+helm upgrade -i prometheus prometheus-community/kube-prometheus-stack -f ${path.module}/prometheus-dev.yaml
 EOF
   }
 }
 
 
 # Destroy time provisioners to delete the lb
-resource "null_resource" "helm_uninstall" {
+# resource "null_resource" "helm_uninstall" {
 
-  provisioner "local-exec" {
-    when    = destroy
-    command = <<EOF
-aws eks update-kubeconfig --name "dev-eks"
-echo "UnInstalling Nginx Ingress Controller"
+#   provisioner "local-exec" {
+#     when    = destroy
+#     command = <<EOF
+# aws eks update-kubeconfig --name "dev-eks"
+# echo "UnInstalling Nginx Ingress Controller"
 
-helm uninstall ngx-ingress
+# helm uninstall ngx-ingress
 
-EOF
-  }
-}
+# EOF
+#   }
+# }
