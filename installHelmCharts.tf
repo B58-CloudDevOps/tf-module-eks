@@ -39,7 +39,7 @@ resource "null_resource" "prometheus_stack" {
 aws eks update-kubeconfig --name "${var.env}-eks"
 kubectl get nodes
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-helm upgrade -i prometheus prometheus-community/kube-prometheus-stack -f ${path.module}/prometheus-dev.yaml || true
+helm upgrade -i prometheus-stack prometheus-community/kube-prometheus-stack -f ${path.module}/prometheus-dev.yaml || true
 EOF
   }
 }
