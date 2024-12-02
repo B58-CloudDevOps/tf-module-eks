@@ -33,7 +33,7 @@ resource "null_resource" "filebeat" {
     always_run = timestamp() # This ensure that this provisioner would be triggering all the time
   }
   provisioner "local-exec" {
-    on_failure = "continue"
+    on_failure = continue
     command    = <<EOF
 
 aws eks update-kubeconfig --name "${var.env}-eks"
