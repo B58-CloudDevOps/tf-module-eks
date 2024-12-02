@@ -38,7 +38,7 @@ resource "null_resource" "filebeat" {
 
 aws eks update-kubeconfig --name "${var.env}-eks"
 helm repo add elastic https://helm.elastic.co
-helm install filebeat elastic/filebeat -f  ${path.module}/filebeat.yml
+helm upgrade -i filebeat elastic/filebeat -f  ${path.module}/filebeat.yml
 EOF
   }
 }
