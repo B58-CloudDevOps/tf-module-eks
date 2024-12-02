@@ -28,6 +28,10 @@ EOF
 resource "null_resource" "filebeat" {
 
   depends_on = [aws_eks_cluster.main, aws_eks_node_group.node, null_resource.helm_install_boot]
+
+  triggers = {
+    always_run = timestamp() # This ensure that this provisioner would be triggering all the time
+  }
   provisioner "local-exec" {
     on_failure = "continue"
     command    = <<EOF
