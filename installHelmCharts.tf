@@ -33,7 +33,8 @@ resource "null_resource" "prometheus_stack" {
 
   depends_on = [aws_eks_cluster.main, aws_eks_node_group.node, null_resource.helm_install_boot]
   provisioner "local-exec" {
-    command = <<EOF
+    on_failure = "continue"
+    command    = <<EOF
 
 aws eks update-kubeconfig --name "${var.env}-eks"
 kubectl get nodes
