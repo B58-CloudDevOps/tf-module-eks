@@ -22,7 +22,7 @@ helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo list 
 ls -ltr
 echo "${path.module}"
-helm upgrade -i ngx-ingres ingress-nginx/ingress-nginx -f ${path.module}/ingress.yaml
+helm upgrade --force ngx-ingres ingress-nginx/ingress-nginx -f ${path.module}/ingress.yaml
 EOF
   }
 }
