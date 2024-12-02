@@ -1,9 +1,6 @@
 resource "null_resource" "helm_install_boot" {
 
-  #   depends_on = [aws_eks_cluster.main, aws_eks_node_group.node]
-  # triggers = {
-  #   always_run = timestamp() # This ensure that this provisioner would be triggering all the time
-  # }
+
   provisioner "local-exec" {
     command = <<EOF
 rm -rf .kube/config
@@ -27,9 +24,8 @@ EOF
   }
 }
 
-
-# Deploys prometheus stack
-resource "null_resource" "prometheus_stack" {
+# Deploys filebeat
+resource "null_resource" "filebeat" {
 
   depends_on = [aws_eks_cluster.main, aws_eks_node_group.node, null_resource.helm_install_boot]
   provisioner "local-exec" {
@@ -37,9 +33,23 @@ resource "null_resource" "prometheus_stack" {
     command    = <<EOF
 
 aws eks update-kubeconfig --name "${var.env}-eks"
+helm repo add elastic https://helm.elastic.co
+helm install filebeat elastic/filebeat -f  ${path.module}/filebeat.yml
+EOF
+  }
+}
+
+resource "null_resource" "prometheus_stack" {
+
+  depends_on = [aws_eks_cluster.main, aws_eks_node_group.node, null_resource.helm_install_boot, null_resource.filebeat]
+  provisioner "local-exec" {
+    on_failure = "continue"
+    command    = <<EOF
+
+aws eks update-kubeconfig --name "${var.env}-eks"
 kubectl get nodes
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-helm upgrade -i prometheus-stack prometheus-community/kube-prometheus-stack -f ${path.module}/prometheus-dev.yaml || true
+helm install prom-stack prometheus-community/kube-prometheus-stack -f ${path.module}/prometheus-dev.yaml || true
 EOF
   }
 }
