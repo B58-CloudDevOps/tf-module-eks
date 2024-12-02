@@ -14,7 +14,7 @@ echo "Installing Metrics Server"
 kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 echo "Installing ArgoCD"
 kubectl create ns argocd && true
-sleep 190
+sleep 10
 kubectl apply -f https://raw.githubusercontent.com/B58-CloudDevOps/learn-kubernetes/refs/heads/main/arogCD/argo.yaml -n argocd 
 
 echo "Installing Nginx Ingress Controller"
@@ -22,7 +22,7 @@ helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo list 
 ls -ltr
 echo "${path.module}"
-helm upgrade --force ngx-ingres ingress-nginx/ingress-nginx -f ${path.module}/ingress.yaml
+helm upgrade -i ngx-ingres ingress-nginx/ingress-nginx -f ${path.module}/ingress.yaml
 EOF
   }
 }
@@ -38,7 +38,7 @@ resource "null_resource" "prometheus_stack" {
 aws eks update-kubeconfig --name "${var.env}-eks"
 kubectl get nodes
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-helm upgrade -i prometheus prometheus-community/kube-prometheus-stack -f ${path.module}/prometheus-dev.yaml
+helm upgrade --force prometheus prometheus-community/kube-prometheus-stack -f ${path.module}/prometheus-dev.yaml
 EOF
   }
 }
